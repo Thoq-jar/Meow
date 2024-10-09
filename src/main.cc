@@ -1,9 +1,10 @@
-#include "main.hh"
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include <sstream>
 #include <csignal>
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include "main.hh"
 
 using namespace std;
 
@@ -24,81 +25,85 @@ void signalHandler(int signum) {
 }
 
 double calculate(double num1, double num2, char op) {
-    switch (op) {
-        case '+': return num1 + num2;
-        case '-': return num1 - num2;
-        case '*': return num1 * num2;
-        case '/':
-            if (num2 != 0) return num1 / num2;
-            else {
-                cout << "Error: Division by zero!" << endl;
-                return 0;
-            }
-        default:
-            cout << "Error: Invalid operator!" << endl;
-            return 0;
-    }
+  switch (op) {
+    case '+':
+      return num1 + num2;
+    case '-':
+      return num1 - num2;
+    case '*':
+      return num1 * num2;
+    case '/':
+      if (num2 != 0)
+        return num1 / num2;
+      else {
+        cout << "Error: Division by zero!" << endl;
+        return 0;
+      }
+    default:
+      cout << "Error: Invalid operator!" << endl;
+      return 0;
+  }
 }
 
 double eval(const string& expression) {
-    stringstream ss(expression);
-    double num1, num2;
-    char op;
+  stringstream ss(expression);
+  double num1, num2;
+  char op;
 
-    ss >> num1 >> op >> num2;
+  ss >> num1 >> op >> num2;
 
-    return calculate(num1, num2, op);
+  return calculate(num1, num2, op);
 }
 
 void parse(string userInput, CommandMap& commandMap) {
-    string commandName;
-    string args;
+  string commandName;
+  string args;
 
-    stringstream ss(userInput);
-    ss >> commandName;
-    getline(ss, args);
+  stringstream ss(userInput);
+  ss >> commandName;
+  getline(ss, args);
 
-    double result;
-
-    switch (commandMap.getCommandCode(commandName)) {
-        case 1:
-            cout << args << endl;
-            break;
-        case 2:
-            cout << " Meow? Purr..." << endl;
-            exit(0);
-        case 3:
-            cout << help << endl;
-            break;
-        case 4:
-            result = eval(args.substr(5));
-            cout << "Result: " << result << endl;
-            break;
-        default:
-            cout << " " << name << ": " << userInput << " is not a command!\n Enter 'meow! 'for help." << endl;
-            break;
-    }
+  double result;
+  switch (commandMap.getCommandCode(commandName)) {
+    case 1:
+      cout << args << endl;
+      break;
+    case 2:
+      cout << " Meow? Purr..." << endl;
+      exit(0);
+    case 3:
+      cout << help << endl;
+      break;
+    case 4:
+      result = eval(args.substr(5));
+      cout << "Result: " << result << endl;
+      break;
+    default:
+      cout << " " << name << ": " << userInput
+           << " is not a command!\n Enter 'meow! 'for help." << endl;
+      break;
+  }
 }
 
 void input(CommandMap& commandMap) {
-    command = "";
-    cout << " >> ";
+  command = "";
+  cout << " >> ";
 
-    getline(cin, command);
-    parse(command, commandMap);
+  getline(cin, command);
+  parse(command, commandMap);
 }
 
 int main() {
-    signal(SIGINT, signalHandler);
+  signal(SIGINT, signalHandler);
 
-    CommandMap commandMap;
-    commandMap.addCommand("purr", 1);
-    commandMap.addCommand("nap", 2);
-    commandMap.addCommand("scratch", 2);
-    commandMap.addCommand("meow!", 3);
-    commandMap.addCommand("play", 4);
+  CommandMap commandMap;
+  commandMap.addCommand("purr", 1);
+  commandMap.addCommand("nap", 2);
+  commandMap.addCommand("scratch", 2);
+  commandMap.addCommand("meow!", 3);
+  commandMap.addCommand("play", 4);
 
-    cout << " Welcome to " << name << "!" << endl;
-    while (true) input(commandMap);
-    return 0;
+  cout << " Welcome to " << name << "!" << endl;
+  while (true) input(commandMap);
+  return 0;
 }

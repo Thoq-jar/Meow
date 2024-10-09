@@ -1,8 +1,19 @@
 cxx = clang++
 cxxflags = -Wall -Wextra -std=c++17
+clang_format = clang-format
+
+src_files = src/main.cc
+
+output = meowrepl
 
 rule cxx
   command = $cxx $cxxflags -o $out $in
 
-build meowrepl: cxx src/main.cc
-default meowrepl
+build $output: cxx $src_files
+
+default $output
+
+rule format
+  command = $clang_format -i $in
+
+build format: format $src_files

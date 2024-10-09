@@ -1,0 +1,28 @@
+BasedOnStyle: Google
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+BreakBeforeBraces: Allman
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AlwaysBreakAfterReturnType: All
+AlwaysBreakBeforeMultilineStrings: true
+BinPackParameters: false
+BinPackArguments: false
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: true
+SpacesInParentheses: false
+SpacesInContainerLiterals: false
+SpaceBeforeInheritanceColon: true
+SpaceAfterInheritanceColon: true
+Cpp11BracedListStyle: true
+SortIncludes: false
+IncludeBlocks: Preserve
+IncludeCategories:
+  - Regex: '^<.*>'
+    Priority: 1
+  - Regex: '^\..*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
