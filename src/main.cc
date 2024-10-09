@@ -9,10 +9,17 @@ using namespace std;
 
 string command;
 string name = "Meowlang REPL";
-string help = " Help:\n  purr <args> - print out args\n  nap - quit\n  scratch - also quit\n  meow - show this screen\n  play <expression> - evaluate a mathematical expression";
+string help = R"( 
+ Help:
+  purr <args> - print out args
+  nap - quit
+  scratch - also quit
+  meow! - show this screen
+  play <expression> - evaluate a mathematical expression
+)";
 
 void signalHandler(int signum) {
-  cout << " Meow? Purr..." << endl;
+  cout << "\n Meow? Purr..." << endl;
   exit(signum);
 }
 
@@ -68,7 +75,7 @@ void parse(string userInput, CommandMap& commandMap) {
             cout << "Result: " << result << endl;
             break;
         default:
-            cout << " " << name << ": " << userInput << " is not a command!" << endl;
+            cout << " " << name << ": " << userInput << " is not a command!\n Enter 'meow! 'for help." << endl;
             break;
     }
 }
@@ -76,7 +83,7 @@ void parse(string userInput, CommandMap& commandMap) {
 void input(CommandMap& commandMap) {
     command = "";
     cout << " >> ";
-    
+
     getline(cin, command);
     parse(command, commandMap);
 }
@@ -88,7 +95,7 @@ int main() {
     commandMap.addCommand("purr", 1);
     commandMap.addCommand("nap", 2);
     commandMap.addCommand("scratch", 2);
-    commandMap.addCommand("meow", 3);
+    commandMap.addCommand("meow!", 3);
     commandMap.addCommand("play", 4);
 
     cout << " Welcome to " << name << "!" << endl;
