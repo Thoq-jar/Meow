@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "sstream": "cpp",
+        "cmath": "cpp",
+        "string": "cpp",
+        "cstdlib": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "csignal": "cpp",
+        "istream": "cpp"
+    }
+}

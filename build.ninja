@@ -1,0 +1,8 @@
+cxx = clang++
+cxxflags = -Wall -Wextra -std=c++17
+
+rule cxx
+  command = $cxx $cxxflags -o $out $in
+
+build meowrepl: cxx src/main.cc
+default meowrepl
