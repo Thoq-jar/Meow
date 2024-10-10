@@ -3,8 +3,10 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 #include "main.hh"
+#include "utils.hh"
 
 using namespace std;
 
@@ -36,11 +38,11 @@ double calculate(double num1, double num2, char op) {
       if (num2 != 0)
         return num1 / num2;
       else {
-        cout << "Error: Division by zero!" << endl;
+        error("division by zero!\n");
         return 0;
       }
     default:
-      cout << "Error: Invalid operator!" << endl;
+      error("invalid operator!\n");
       return 0;
   }
 }
@@ -79,8 +81,7 @@ void parse(string userInput, CommandMap& commandMap) {
       cout << "Result: " << result << endl;
       break;
     default:
-      cout << " " << name << ": " << userInput
-           << " is not a command!\n Enter 'meow! 'for help." << endl;
+      error("Meowlang: '" + command + "' is not a command!\n Enter 'meow!' for help");
       break;
   }
 }
@@ -93,7 +94,22 @@ void input(CommandMap& commandMap) {
   parse(command, commandMap);
 }
 
-int main() {
+void executeFile(const string& filename, CommandMap& commandMap) {
+  ifstream file(filename);
+  if (!file.is_open()) {
+    error("could not open file " + filename + "\n");
+    return;
+  }
+
+  string line;
+  while (getline(file, line)) {
+    parse(line, commandMap);
+  }
+
+  file.close();
+}
+
+int main(int argc, char* argv[]) {
   signal(SIGINT, signalHandler);
 
   CommandMap commandMap;
@@ -103,7 +119,13 @@ int main() {
   commandMap.addCommand("meow!", 3);
   commandMap.addCommand("play", 4);
 
-  cout << " Welcome to " << name << "!" << endl;
-  while (true) input(commandMap);
+  if (argc > 1) {
+    string filename = argv[1];
+    executeFile(filename, commandMap);
+  } else {
+    cout << " Welcome to " << name << "!" << endl;
+    while (true) input(commandMap);
+  }
+
   return 0;
 }
