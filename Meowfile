@@ -1,3 +1,0 @@
-purriler = "clang++"
-purroject_files = ["src/main.cc", "src/utils.cc"]
-meoutput = "meowrepl"

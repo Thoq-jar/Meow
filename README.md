@@ -1,3 +1,3 @@
 # Meow Meow Meow
 
-(You need [MeowMake](https://github.com/Thoq-jar/MeowMake))
+(You need [Purriler](https://github.com/Thoq-jar/Purriler))
