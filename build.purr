@@ -1,0 +1,15 @@
+output_dir = "purr-out"
+output_name = "meow"
+keep = true
+
+sources = [
+    "src/main.cc",
+    "src/utils.cc",
+]
+
+include_paths = [
+    ".",
+    "src",
+]
+
+library_paths = []
